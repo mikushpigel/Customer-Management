@@ -104,6 +104,21 @@ data (e.g. naming is inconsistent), set `NOTION_PROP_EMAIL` to match on
 email instead — update your Zapier automation to include the contact's
 email in that Notion property.
 
+## Deploying to Railway
+
+1. Create a new Railway project from this GitHub repo (Railway auto-detects
+   Next.js via Nixpacks and uses the `railway.json` in this repo for the
+   build/start commands).
+2. In the Railway service's **Variables** tab, set the same variables as
+   `.env.example`: `NOTION_API_KEY`, `NOTION_DATABASE_ID`,
+   `NOTION_PROP_COMPANY`, `NOTION_PROP_DATE`, `NOTION_PROP_SUMMARY`, and
+   `NOTION_PROP_EMAIL` if you use it.
+3. **Attach a volume** mounted at `/app/data` (Railway service → **Volumes**
+   tab → New Volume). Customers are stored in `data/customers.json` on disk;
+   without a volume that file lives on the container's ephemeral filesystem
+   and is wiped on every redeploy.
+4. Deploy. Railway provides `PORT` automatically, which `next start` reads.
+
 ## Project structure
 
 ```
